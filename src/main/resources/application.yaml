@@ -1,0 +1,18 @@
+application:
+  mqtt:
+    edge:
+      protocol: "${MQTT_EDGE_PROTOCOL:tcp}"
+      host: "${MQTT_EDGE_HOST:localhost}"
+      port: "${MQTT_EDGE_PORT:1883}"
+      topic: "${MQTT_EDGE_TOPIC:HEALTH}"
+    cloud:
+      protocol: "${MQTT_CLOUD_PROTOCOL:tcp}"
+      host: "${MQTT_CLOUD_HOST:localhost}"
+      port: "${MQTT_CLOUD_PORT:1883}"
+      topic: "${MQTT_CLOUD_TOPIC:HEALTH}"
+  dataCapturesSize: 1000
+  updateCron: 0 * * * * *
+
+
+server:
+  port: "${INTERNAL_SERVICE_PORT:8080}"
