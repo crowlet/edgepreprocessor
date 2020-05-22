@@ -10,7 +10,7 @@ application:
       host: "${MQTT_CLOUD_HOST:localhost}"
       port: "${MQTT_CLOUD_PORT:1883}"
       topic: "${MQTT_CLOUD_TOPIC:HEALTH}"
-  dataCapturesSize: 1000
+  dataCapturesSize: 10000
   updateCron: 0 * * * * *
 
 
