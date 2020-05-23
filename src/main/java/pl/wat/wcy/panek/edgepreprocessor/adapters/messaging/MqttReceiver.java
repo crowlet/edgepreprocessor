@@ -16,7 +16,9 @@ public class MqttReceiver {
     private final MqttListener listener;
     private final String topic;
 
-    public MqttReceiver(ObjectMapper objectMapper, @Qualifier("edgeMqttClient") IMqttClient client, MqttListener listener,
+    public MqttReceiver(ObjectMapper objectMapper,
+                        @Qualifier("edgeMqttClient") IMqttClient client,
+                        MqttListener listener,
                         @Value("${application.mqtt.edge.topic}") String topic) {
         this.objectMapper = objectMapper;
         this.client = client;

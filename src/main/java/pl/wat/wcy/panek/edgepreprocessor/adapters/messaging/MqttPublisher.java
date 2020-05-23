@@ -36,7 +36,7 @@ public class MqttPublisher implements MessagePublisher {
     private MqttMessage mqttMessage(Object message) {
         MqttMessage mqttMessage = new MqttMessage(objectMapper.writeValueAsBytes(message));
         mqttMessage.setRetained(true);
-        mqttMessage.setQos(2);
+        mqttMessage.setQos(1);
         return mqttMessage;
     }
 }
