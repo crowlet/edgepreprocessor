@@ -1,5 +1,6 @@
 package pl.wat.wcy.panek.edgepreprocessor.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.IMqttClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@Slf4j
 public class MqttConfig {
 
 
@@ -19,7 +21,7 @@ public class MqttConfig {
             final PublisherIdProvider publisherIdProvider,
             final MqttConnectOptions options
     ) throws MqttException {
-
+        log.info("Edge: " + mqttBrokerUrl);
         var mqttClient = new MqttClient(mqttBrokerUrl, publisherIdProvider.id());
         mqttClient.connect(options);
         return mqttClient;
@@ -32,7 +34,7 @@ public class MqttConfig {
             final PublisherIdProvider publisherIdProvider,
             final MqttConnectOptions options
     ) throws MqttException {
-
+        log.info("Cloud: " + mqttBrokerUrl);
         var mqttClient = new MqttClient(mqttBrokerUrl, publisherIdProvider.id());
         mqttClient.connect(options);
         return mqttClient;
