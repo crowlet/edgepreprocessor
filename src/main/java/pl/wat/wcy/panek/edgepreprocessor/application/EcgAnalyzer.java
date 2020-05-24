@@ -20,11 +20,21 @@ public class EcgAnalyzer extends StatisticsAnalyzer {
     }
 
     private Map<String, Number> mean() {
-        return dataCaptures.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> calculateMean(e.getValue().stream().map(Number::doubleValue).map(Math::abs).collect(Collectors.toList()))));
+        return dataCaptures.entrySet().stream()
+                .collect(
+                        Collectors.toMap(
+                                e -> e.getKey(),
+                                e -> calculateMean(
+                                        e.getValue().stream()
+                                                .map(Number::doubleValue)
+                                                .map(Math::abs)
+                                                .collect(Collectors.toList())
+                                ))
+                );
     }
 
     private Number calculateMean(Collection<Number> numbers) {
-        return numbers.stream().reduce(0, this::sum).doubleValue() / numbers.stream().count();
+        return numbers.stream().reduce(0, this::sum).doubleValue() / (long) numbers.size();
     }
 
     private Number sum(Number a, Number b) {

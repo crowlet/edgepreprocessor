@@ -21,7 +21,14 @@ public class SpO2Analyzer extends StatisticsAnalyzer {
     }
 
     private Map<String, Number> percentiles(int p) {
-        return dataCaptures.entrySet().stream().collect(Collectors.toMap(e -> e.getKey(), e -> calculatePercentile(e.getValue(), p)));
+        return dataCaptures.entrySet()
+                .stream()
+                .collect(
+                        Collectors.toMap(
+                                e -> e.getKey(),
+                                e -> calculatePercentile(e.getValue(), p)
+                        )
+                );
     }
 
     private Number calculatePercentile(CyclicTimeAwareList<Number> dataCaptures, int p) {

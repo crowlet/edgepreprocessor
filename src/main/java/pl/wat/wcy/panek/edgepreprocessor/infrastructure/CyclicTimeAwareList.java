@@ -26,6 +26,57 @@ public class CyclicTimeAwareList<T> implements Collection<T> {
     }
 
     @Override
+    public boolean add(T t) {
+        lock.lock();
+        try {
+            if (values.size() < size) {
+                update();
+                return this.values.add(t);
+            } else {
+                update();
+                this.values.remove(0);
+                return this.values.add(t);
+            }
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        update();
+        return values.remove(o);
+    }
+
+    private void update() {
+        this.lastUpdate = LocalDateTime.now();
+    }
+
+    public List<T> sortedCopy() {
+        lock.lock();
+        try {
+            return values.stream().sorted().collect(Collectors.toList());
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Override
+    public void clear() {
+        this.values.clear();
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int size() {
         return values.size();
     }
@@ -56,63 +107,12 @@ public class CyclicTimeAwareList<T> implements Collection<T> {
     }
 
     @Override
-    public boolean add(T t) {
-        lock.lock();
-        try {
-            if (values.size() < size) {
-                update();
-                return this.values.add(t);
-            } else {
-                update();
-                this.values.remove(0);
-                return this.values.add(t);
-            }
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    @Override
-    public boolean remove(Object o) {
-        update();
-        return values.remove(o);
-    }
-
-    @Override
     public boolean containsAll(Collection<?> c) {
         return values.containsAll(c);
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> c) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public boolean removeAll(Collection<?> c) {
         return values.removeAll(c);
-    }
-
-    @Override
-    public boolean retainAll(Collection<?> c) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void clear() {
-        this.values.clear();
-    }
-
-    private void update() {
-        this.lastUpdate = LocalDateTime.now();
-    }
-
-    public List<T> sortedCopy() {
-        lock.lock();
-        try {
-            return values.stream().sorted().collect(Collectors.toList());
-        } finally {
-            lock.unlock();
-        }
     }
 }

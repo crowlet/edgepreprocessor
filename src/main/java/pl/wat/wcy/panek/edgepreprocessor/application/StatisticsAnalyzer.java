@@ -1,6 +1,5 @@
 package pl.wat.wcy.panek.edgepreprocessor.application;
 
-import org.springframework.util.CollectionUtils;
 import pl.wat.wcy.panek.edgepreprocessor.infrastructure.CyclicTimeAwareList;
 
 import java.util.HashMap;
